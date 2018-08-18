@@ -25,7 +25,7 @@ module Readability
         :okMaybeItsACandidateRe => /and|article|body|column|main|shadow/i,
         :positiveRe => /article|body|content|entry|hentry|main|page|pagination|post|text|blog|story/i,
         :negativeRe => /combx|comment|com-|contact|foot|footer|footnote|masthead|media|meta|outbrain|promo|related|scroll|shoutbox|sidebar|sponsor|shopping|tags|tool|widget/i,
-        :divToPElementsRe => /<(a|blockquote|dl|div|img|ol|p|pre|table|ul)/i,
+        :divToPElementsRe => /<(a|blockquote|dl|div|ol|p|pre|table|ul)/i,
         :replaceBrsRe => /(<br[^>]*>[ \n\r\t]*){2,}/i,
         :replaceFontsRe => /<(\/?)font[^>]*>/i,
         :trimRe => /^\s+|\s+$/,
@@ -409,14 +409,7 @@ module Readability
 
       node.css("form, object, iframe, embed").each do |elem|
         elem.remove
-      end
-
-      if @options[:remove_empty_nodes]
-        # remove <p> tags that have no text content - this will also remove p tags that contain only images.
-        node.css("p").each do |elem|
-          elem.remove if elem.content.strip.empty?
-        end
-      end
+    end
 
       # Conditionally clean <table>s, <ul>s, and <div>s
       clean_conditionally(node, candidates, "table, ul, div")
